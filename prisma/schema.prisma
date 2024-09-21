@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model a {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model comment {
+  id      Int    @id @default(autoincrement())
+  content String
+
+  pet    pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  petId  String
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+}
+
+model user {
+  id             String           @id @default(uuid())
+  name           String
+  email          String           @unique
+  password       String
+  bio            String
+  user_img       String
+  phone          String
+  fav_pets       fav_pets[]
+  contacted_pets contacted_pets[]
+  comment        comment[]
+}
+
+model pet {
+  id             String           @id @default(uuid())
+  aid            Int?
+  name           String
+  breed          String
+  ownerId        String
+  photo          String
+  comments       comment[]
+  fav_pets       fav_pets[]
+  status         String?
+  address        String?
+  age            String?
+  gender         String?
+  about          String?
+  contacted_pets contacted_pets[]
+  from           String?
+  url            String?
+}
+
+model fav_pets {
+  id     Int    @id @default(autoincrement())
+  userId String
+  petId  String
+  pet    pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model contacted_pets {
+  id     Int    @id @default(autoincrement())
+  userId String
+  petId  String
+  pet    pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
