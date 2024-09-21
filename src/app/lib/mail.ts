@@ -4,6 +4,7 @@ import * as handlebars from "handlebars";
 
 import { templa } from "./templates/email"; 
 
+
 export async function sendMail({
   to,
   name,
