@@ -27,6 +27,7 @@ const PetListingCur = () => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     const userData = await response.json();
                     localStorage.setItem('userId', JSON.stringify(userData.id));
+                    localStorage.setItem('user_z', JSON.stringify(userData));
                 } catch (error) {
                     console.error('Failed to fetch user data:', error);
                 }
